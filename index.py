@@ -4,6 +4,7 @@ app = Flask(__name__)
 import random
 import ollama
 from flask import Flask
+from flask_cors import CORS
 
 wordset = set()
 f = open('./data/large_wc.txt')
@@ -18,7 +19,9 @@ for word in f:
     if count == 2000:
         break
 print(len(wordset))
+
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/")
 def get_words():
