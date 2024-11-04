@@ -4,22 +4,29 @@ app = Flask(__name__)
 import random
 import ollama
 from flask import Flask
-from nltk.corpus import words
-import nltk.data as nltk
 
-nltk.path.append('./data/nltk_data')
+wordset = set()
+f = open('./data/large_wc.txt')
 
-wordset = words.words()
+count = 0
 
+for word in f:
+    word = word.split()[0]
+    if len(word) > 3:
+        wordset.add(word)
+        count += 1
+    if count == 10000:
+        break
+print(len(wordset))
 app = Flask(__name__)
 
 @app.route("/")
 def get_words():
     possible_words = set()
-    while len(possible_words) < 30:
+    aeiou = list("aeiou")
+    letters = list("qwrtypsdfghjklzxcvbnm")
+    while len(possible_words) < 20:
         possible_words = set()
-        letters = list("qwrtypsdfghjklzxcvbnm")
-        aeiou = list("aeiou")
         random.seed()
         random.shuffle(letters)
         random.shuffle(aeiou)
@@ -27,12 +34,11 @@ def get_words():
         chosen.extend(aeiou[:2])
         chosen_set = set(chosen)
         empty = set()
-
         for word in wordset:
             if set(list(word)).difference(chosen_set) == empty:
-                if len(word) > 3:
-                    possible_words.add(word)
-    # html_to_ret = "<p>{0}</p><p>{1}</p>".format(chosen, possible_words)
+                possible_words.add(word)
+        print(len(possible_words))
+    # html_to_ret = "<p>{0}</p><p>{1}</p>".format(chosen, possible_words
     json = {"chosen":str(chosen), "possible_words":str(possible_words)}
     return json
 
@@ -52,13 +58,12 @@ def get_hint(word):
 
 
 if __name__ == "__main__":
-    possible_words, chosen = get_words()
+    json = get_words()
+    possible_words = json['possible_words']
+    chosen = json['chosen']
     print(possible_words)
     print(chosen)
     possible_words = sorted(list(possible_words), key=lambda x: len(x), reverse=True)
-
-    words_hint = {}
-    print(words_hint)
 
 @app.route("/api")
 def api():
