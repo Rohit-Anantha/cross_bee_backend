@@ -15,7 +15,7 @@ for word in f:
     if len(word) > 3:
         wordset.add(word)
         count += 1
-    if count == 10000:
+    if count == 2000:
         break
 print(len(wordset))
 app = Flask(__name__)
