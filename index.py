@@ -10,7 +10,7 @@ wordset = words.words()
 
 app = Flask(__name__)
 
-@app.route("/get_words")
+@app.route("/")
 def get_words():
     possible_words = set()
     while len(possible_words) < 30:
