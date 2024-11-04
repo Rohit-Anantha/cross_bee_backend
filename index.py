@@ -5,6 +5,9 @@ import random
 import ollama
 from flask import Flask
 from nltk.corpus import words
+import nltk.data as nltk
+
+nltk.path.append('/data/nltk_data')
 
 wordset = words.words()
 
@@ -17,7 +20,7 @@ def get_words():
         possible_words = set()
         letters = list("qwrtypsdfghjklzxcvbnm")
         aeiou = list("aeiou")
-        random.seed(20)
+        random.seed()
         random.shuffle(letters)
         random.shuffle(aeiou)
         chosen = letters[:5]
