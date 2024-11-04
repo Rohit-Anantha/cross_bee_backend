@@ -42,7 +42,7 @@ def get_words():
                 possible_words.add(word)
         print(len(possible_words))
     # html_to_ret = "<p>{0}</p><p>{1}</p>".format(chosen, possible_words
-    json = {"chosen":str(chosen), "possible_words":str(possible_words)}
+    json = {"chosen":chosen, "possible_words":possible_words}
     return json
 
 
