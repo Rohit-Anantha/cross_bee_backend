@@ -7,7 +7,7 @@ from flask import Flask
 from nltk.corpus import words
 import nltk.data as nltk
 
-nltk.path.append('/data/nltk_data')
+nltk.path.append('./data/nltk_data')
 
 wordset = words.words()
 
