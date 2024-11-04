@@ -1,16 +1,15 @@
 from flask import Flask
-
 app = Flask(__name__)
+
 import random
 import ollama
 from flask import Flask
 from flask_cors import CORS
+import time
 
 wordset = set()
 f = open('./data/large_wc.txt')
-
 count = 0
-
 for word in f:
     word = word.split()[0]
     if len(word) > 3:
@@ -18,19 +17,20 @@ for word in f:
         count += 1
     if count == 2000:
         break
-print(len(wordset))
 
 app = Flask(__name__)
 CORS(app)
 
+
 @app.route("/")
 def get_words():
     possible_words = set()
-    aeiou = list("aeiou")
-    letters = list("qwrtypsdfghjklzxcvbnm")
+    ct = time.gmtime().tm_mon + time.gmtime().tm_year + time.gmtime().tm_mday
     while len(possible_words) < 20:
+        letters = list("qwrtypsdfghjklzxcvbnm")
+        aeiou = list("aeiou")
         possible_words = set()
-        random.seed()
+        random.seed(ct)
         random.shuffle(letters)
         random.shuffle(aeiou)
         chosen = letters[:5]
@@ -40,9 +40,13 @@ def get_words():
         for word in wordset:
             if set(list(word)).difference(chosen_set) == empty:
                 possible_words.add(word)
-        print(len(possible_words))
+        ct += 1
     # html_to_ret = "<p>{0}</p><p>{1}</p>".format(chosen, possible_words
-    json = {"chosen":list(chosen), "possible_words":list(possible_words)}
+    chosen = list(chosen)
+    possible_words = list(possible_words)
+    chosen = [x.upper() for x in chosen]
+    possible_words = [x.upper() for x in possible_words]
+    json = {"chosen": chosen, "possible_words": possible_words}
     return json
 
 
@@ -64,8 +68,6 @@ if __name__ == "__main__":
     json = get_words()
     possible_words = json['possible_words']
     chosen = json['chosen']
-    print(possible_words)
-    print(chosen)
     possible_words = sorted(list(possible_words), key=lambda x: len(x), reverse=True)
 
 @app.route("/api")
