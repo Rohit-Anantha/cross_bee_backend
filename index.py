@@ -43,10 +43,10 @@ def get_words():
     # html_to_ret = "<p>{0}</p><p>{1}</p>".format(chosen, possible_words
     
     sorted_chosen = letters[:3] + aeiou[:2] + letters[3:5]
-    print(chosen, sorted_chosen)
     possible_words = list(possible_words)
-    chosen = [x.upper() for x in chosen]
+    sorted_chosen = [x.upper() for x in sorted_chosen]
     possible_words = [x.upper() for x in possible_words]
+    print(chosen, sorted_chosen)
     json = {"chosen": sorted_chosen, "possible_words": possible_words}
     return json
 
