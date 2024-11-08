@@ -24,12 +24,13 @@ CORS(app)
 @app.route("/")
 def get_words():
     possible_words = set()
-    ct = time.gmtime().tm_mon + time.gmtime().tm_year + time.gmtime().tm_mday
+    ct = 0
+    print(ct)
     while len(possible_words) < 20:
         letters = list("qwrtypsdfghjklzxcvbnm")
         aeiou = list("aeiou")
         possible_words = set()
-        random.seed(ct)
+        # random.seed(ct)
         random.shuffle(letters)
         random.shuffle(aeiou)
         chosen = letters[:5]
