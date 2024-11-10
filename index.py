@@ -24,13 +24,13 @@ CORS(app)
 @app.route("/")
 def get_words():
     possible_words = set()
-    ct = 0
+    ct = time.gmtime().tm_mon + time.gmtime().tm_year + time.gmtime().tm_mday
     print(ct)
     while len(possible_words) < 20:
         letters = list("qwrtypsdfghjklzxcvbnm")
         aeiou = list("aeiou")
         possible_words = set()
-        # random.seed(ct)
+        random.seed(ct)
         random.shuffle(letters)
         random.shuffle(aeiou)
         chosen = letters[:5]
@@ -40,8 +40,7 @@ def get_words():
         for word in wordset:
             if set(list(word)).difference(chosen_set) == empty and aeiou[1] not in word:
                 possible_words.add(word)
-        ct += 1
-    # html_to_ret = "<p>{0}</p><p>{1}</p>".format(chosen, possible_words
+        ct *= 2
     
     sorted_chosen = letters[:3] + aeiou[:2] + letters[3:5]
     possible_words = list(possible_words)
