@@ -1,11 +1,10 @@
 from flask import Flask
-app = Flask(__name__)
-
 import random
 import ollama
-from flask import Flask
 from flask_cors import CORS
 import time
+
+app = Flask(__name__)
 
 wordset = set()
 f = open('./data/large_wc.txt')
@@ -24,7 +23,8 @@ CORS(app)
 @app.route("/")
 def get_words():
     possible_words = set()
-    ct = time.gmtime().tm_mon + time.gmtime().tm_year + time.gmtime().tm_mday
+    current_time = time.gmtime()
+    ct = current_time.tm_year * 10000 + current_time.tm_mon * 100 + current_time.tm_mday
     print(ct)
     while len(possible_words) < 20:
         letters = list("qwrtypsdfghjklzxcvbnm")
