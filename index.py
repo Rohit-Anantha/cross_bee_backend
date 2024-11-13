@@ -44,8 +44,9 @@ def get_words():
         ct *= 2
     
     sorted_chosen = letters[:3] + aeiou[:2] + letters[3:5]
+    sorted_chosen = [x.upper() for x in sorted_chosen]
     possible_words = [x.upper() for x in possible_words]
-    json = {"chosen": sorted_chosen, "possible_words": possible_words, "honey_char": honey_c}
+    json = {"chosen": sorted_chosen, "possible_words": possible_words, "honey_char": honey_c.upper()}
     return json
 
 if __name__ == "__main__":
