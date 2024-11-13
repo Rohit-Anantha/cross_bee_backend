@@ -38,8 +38,9 @@ def get_words():
         chosen_set = set(chosen)
         empty = set()
         for word in wordset:
-            if set(list(word)).difference(chosen_set) == empty and aeiou[1] not in word:
-                possible_words.add(word)
+            if set(list(word)).difference(chosen_set) == empty:
+                if aeiou[1] in word:
+                    possible_words.add(word)
         ct *= 2
     
     sorted_chosen = letters[:3] + aeiou[:2] + letters[3:5]
@@ -70,6 +71,7 @@ if __name__ == "__main__":
     possible_words = json['possible_words']
     chosen = json['chosen']
     possible_words = sorted(list(possible_words), key=lambda x: len(x), reverse=True)
+    print(possible_words)
 
 @app.route("/api")
 def api():
