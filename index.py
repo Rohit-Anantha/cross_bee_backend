@@ -13,7 +13,7 @@ for word in f:
     if len(word) > 3:
         wordset.add(word)
         count += 1
-    if count == 10000:
+    if count == 50000:
         break
 
 app = Flask(__name__)
@@ -25,7 +25,8 @@ def get_words():
     current_time = time.gmtime()
     ct = current_time.tm_year * 10000 + current_time.tm_mon * 100 + current_time.tm_mday
     honey_c = None
-    while len(possible_words) < 20:
+    print(ct)
+    while len(possible_words) < 100:
         letters = list("qwrtypsdfghjklzxcvbnm")
         aeiou = list("aeiou")
         possible_words = set()
